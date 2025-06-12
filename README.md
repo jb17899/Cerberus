@@ -1,4 +1,4 @@
-# Redis Clone (Custom In-Memory DB) – Backend Documentation
+# Cereberus (Custom In-Memory DB) - Synopsis
 
 This project is a simplified Redis-like in-memory database implemented in C++, supporting both **HashMap** and **ZSet (Sorted Set using AVL Trees)** data types. The server listens to commands from a socket, processes them, and sends appropriate responses.
 
