@@ -17,6 +17,7 @@
 #include "./CommandImp/CommAbs.h"
 #include<algorithm>
 #include<cstring>
+#include <cstdlib>
 // #include "./Timers/timer.h"
 #pragma GCC diagnostic ignored "-Wwrite-strings"
 
