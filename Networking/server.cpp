@@ -200,8 +200,7 @@ FILE* fp = fopen("./Logging/log.txt","a+");
 
     if(strncmp(command,"get",3) == 0){
         if(!maps.count(queryDB)){
-            char* val = "empty database!fill it up first";
-            write_to_socket(s2,val);
+            write_to_socket(s2,"db does not exist");
             perror("empty db");
         }
         HMap db = maps[queryDB];
@@ -213,8 +212,7 @@ FILE* fp = fopen("./Logging/log.txt","a+");
     }
     else if(strncmp(command,"del",3) == 0){
         if(!maps.count(queryDB)){
-            char* val = "empty database!fill it up first";
-            write_to_socket(s2,val);
+            write_to_socket(s2,"empty database!fill it up first");
             perror("empty db");
         }
         HMap &db = maps[queryDB];
@@ -230,9 +228,8 @@ FILE* fp = fopen("./Logging/log.txt","a+");
     }
     else if(strncmp(command,"new",3) == 0){
         if(maps.count(queryDB)){
-            char* val = "empty database!fill it up first";
-            write_to_socket(s2,val);
-            perror("empty db");
+            write_to_socket(s2,"database exists already!");
+            perror("db exists");
         }
         HMap val;
         maps[queryDB] = val;
@@ -242,9 +239,9 @@ FILE* fp = fopen("./Logging/log.txt","a+");
     }
     else if(strncmp(command,"put",3)==0){
         if(!maps.count(queryDB)){
-            write_to_socket(s2,"empty database!fill it up first");
-            perror("empty db");
-            return -1;
+            write_to_socket(s2,"database does not exist already!Made a");
+            HMap val;
+            maps[queryDB] = val;
         }
         HMap& db = maps[queryDB];
         insert(&db,value,vals);
@@ -408,7 +405,7 @@ int loads(char* buf) {
                 int32_t err = one_request(fds[i].fd,buf);
                 if (err) {
                     printf("Closing connection %d due to error\n", fds[i].fd);
-                    
+
                     close(fds[i].fd);
                     fds[i] = fds[nfds-1];
                     nfds--;

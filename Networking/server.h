@@ -1,6 +1,5 @@
 #ifndef SERVER
 #define SERVER
-#define _GNU_SOURCE
 
 #include<iostream>
 #include<unistd.h>
@@ -19,6 +18,7 @@
 #include<algorithm>
 #include<cstring>
 // #include "./Timers/timer.h"
+#pragma GCC diagnostic ignored "-Wwrite-strings"
 
 #pragma GCC diagnostic ignored "-Wstringop-truncation"
 #pragma GCC diagnostic push

@@ -1,3 +1,0 @@
-/home/vaelin/Downloads/Cereberus/build/CMakeFiles/Cereberus.dir
-/home/vaelin/Downloads/Cereberus/build/CMakeFiles/edit_cache.dir
-/home/vaelin/Downloads/Cereberus/build/CMakeFiles/rebuild_cache.dir
