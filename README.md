@@ -157,8 +157,6 @@ put command at time: 2025-06-12 14:32:00
 
 ## Further Features coming
 
-* Add persistence (save/load DB to file)
-* Refactor into modular classes
 * Instead of using AVL use B+ trees.
-* Secure socket communications
-* Add rollback/versioning features
+* More Secure socket communications
+* Bringing it to Windows
