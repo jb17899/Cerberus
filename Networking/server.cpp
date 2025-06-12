@@ -192,6 +192,12 @@ else{
 
     struct timeVal t = get_time();
 FILE* fp = fopen("./Logging/log.txt","a+");
+if (fp == NULL) {
+    int result = system("mkdir Logging");
+    result = system("touch Logging/log.txt");
+    fp = fopen("./Logging/log.txt", "a+");
+}
+    
     if(fp == NULL){
         perror("Error opening file");
         return -1;
