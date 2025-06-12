@@ -3,6 +3,21 @@
 This project is a simplified Redis-like in-memory database implemented in C++, supporting both **HashMap** and **ZSet (Sorted Set using AVL Trees)** data types. The server listens to commands from a socket, processes them, and sends appropriate responses.
 
 ---
+## How to RUN IT
+```
+# 1. Create build directory
+mkdir build && cd build
+
+# 2. Generate build files
+cmake ..
+
+# 3. Compile
+cmake --build .
+
+#4,Run program for linux.Windows coming soon.
+./Cereberus
+```
+
 
 ## Architecture Overview
 
