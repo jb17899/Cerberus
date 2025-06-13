@@ -18,7 +18,8 @@ cmake --build .
 ./Cereberus
 ```
 ## How to RUN IT
-# 1.You can run it either using client.c or using dart program socket.dart which is in frontend/lib/socket.dart.Or in any language that you prefer.Just follow the rules and according to them design your own client.
+
+ You can run it either using client.c or using dart program socket.dart which is in frontend/lib/socket.dart.Or in any language that you prefer.Just follow the rules and according to them design your own client.
 
 ## Architecture Overview
 
