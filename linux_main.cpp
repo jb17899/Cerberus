@@ -1,10 +1,14 @@
 #include<unistd.h>
 #include "./Networking/server.h"
 int main(){
-    char buf[25];
-    int name_val = getlogin_r(buf, 24);
-    assert(buf);
-    int val = loads(buf);
+    std::string name  = "";
+    std::string password = "";
+    cout<<"Input Your credentials to access Cereberus or If its your first time signup"<<endl;
+    cin>>name;
+    cout<<"Input Password"<<endl;
+    cin>>password;
+    
+
     cout<<"exiting out"<<endl;
     return 0;
 }

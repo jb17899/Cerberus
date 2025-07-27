@@ -184,10 +184,7 @@ else{
     } else {
        offset[0] = '\0';
     }
-    printf("Parsed: command='%s', folder='%s', value='%s', score='%s', offset='%s'\n", command, folder, value, score, offset);
-
-
-    
+    printf("Parsed: command='%s', folder='%s', value='%s', score='%s', offset='%s'\n", command, folder, value, score, offset);    
 }
 
     struct timeVal t = get_time();

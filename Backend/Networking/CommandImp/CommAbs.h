@@ -6,18 +6,19 @@
 #include <cstddef> 
 #include <cstdint>
 #include <cstring>
-#include "../../Backend/SortedSet/SoSet.h"
+#include "../../SortedSet/SoSet.h"
 #define container_of(ptr, T, member) \
     ((T *)( (char *)ptr - offsetof(T, member) ))
-
+#define Entrys Entry<std::string>
 class commAbs{
     public:
     HMap db;
 };
+template<class T>
 class Entry{
    public:
    std::string key;
-   std::string value;
+   T value;
    HNode node; 
 };
 enum {
@@ -32,8 +33,8 @@ enum {
 
 
 static bool entry_eq(HNode *lhs, HNode *rhs) {
-    struct Entry *le = container_of(lhs, Entry,node);
-    struct Entry *re = container_of(rhs, Entry, node);
+    Entrys *le = container_of(lhs, Entrys, node);
+    Entrys *re = container_of(rhs, Entrys, node);
     return le->key == re->key;
 }
 

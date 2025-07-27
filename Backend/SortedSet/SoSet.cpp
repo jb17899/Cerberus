@@ -25,6 +25,8 @@ static void tree_insert(Zset* zset,ZNode* znode){
     zset->root = avl_fix(& znode->root);
     ZNode* val,*val1 = NULL,*val2 = NULL;   
 }
+
+//insertion into DB
 bool zset_insert(Zset *zset, const char *name, size_t len, double score){
     if(ZNode* node = zset_lookup(zset,name,len)){
          zset_update(zset, node, score);
@@ -32,11 +34,9 @@ bool zset_insert(Zset *zset, const char *name, size_t len, double score){
     }
 
     ZNode* node = znode_new(name,len,score);
-
     hm_insert(&zset->hmap,&node->hmap);
     val = node;
-    tree_insert(zset,node);
-    return true;
+     return true;
 }
 void zset_update(Zset* zset,ZNode* node,double score){
     zset->root = node_detachs(&node->root);
@@ -44,6 +44,10 @@ void zset_update(Zset* zset,ZNode* node,double score){
     node->score = score;
     tree_insert(zset,node);
 }
+
+
+
+//DELETION FROM DB
 void zset_delete(Zset *zset, ZNode *node) {
     Hkey key;
     key.len = node->len;
@@ -54,6 +58,9 @@ void zset_delete(Zset *zset, ZNode *node) {
     zset->root = node_detachs(&node->root);
     free(node);
 }
+
+
+//FOR ASC QUERIES AND DESC QUERIES INCASE OF DESC SIMPLY
 ZNode *zset_seekge(Zset *zset, double score, const char *name, size_t len){
     AVLNode* found = NULL;
     for(AVLNode* node = zset->root;node;){
@@ -67,11 +74,14 @@ ZNode *zset_seekge(Zset *zset, double score, const char *name, size_t len){
     }
     return found?container_of(found,ZNode,root):NULL;
 }
+//can get descending easily.by reversing the flow
+//we need something like the max value is let us say X,so below it give everything.Can also get something like a range.
 ZNode *znode_offset(ZNode *node, int64_t offset){
     AVLNode* off = node?avl_offset(&node->root,offset):NULL;
     return off?container_of(off,ZNode,root):NULL;
 }
-string do_zquery(Zset* zset,string name,double score,int offset,int limit){
+//FOR DESC JUST PUT OFFSET AT EVERY OPP AS -1;
+string do_zquery(Zset* zset,string name,double score,int offset,int limit,int asc){
     ZNode* val = zset_seekge(zset,score,name.data(),name.size());
     val = znode_offset(val,offset);
     int n = 0;
@@ -82,10 +92,13 @@ string do_zquery(Zset* zset,string name,double score,int offset,int limit){
         s+=" ";
         s+=" st &*";
         s+=to_string(val->score);
+        if(asc == 1){
         val = znode_offset(val, +1);
+        }else{
+        val = znode_offset(val, -1);
+        }
         n += 1;
     }
-
     return s;
 }
 AVLNode* avl_offset(AVLNode* node,u_int64_t offset){

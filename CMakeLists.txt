@@ -9,7 +9,8 @@ add_executable(Cereberus
 Backend/AVLTreeImp/Tree.cpp
 Backend/HashTableImp/Hash.cpp
 Backend/SortedSet/SoSet.cpp
-Networking/CommandImp/CommAbs.cpp
-Networking/server.cpp
+Backend/Networking/CommandImp/CommAbs.cpp
+Backend/Networking/server.cpp
+Backend/Networking/parser.cpp
 linux_main.cpp
 )

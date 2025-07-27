@@ -7,6 +7,7 @@
 #include <cstddef> 
 #include <cstdint>
 #include <cstring>
+#include "../Networking/CommandImp/CommAbs.h"
 #include "../AVLTreeImp/Tree.h"
 using namespace std;
 
@@ -72,17 +73,13 @@ static bool zless(AVLNode* lhs,AVLNode* rhs){
     int rs = strncmp(hl->name,rl->name,min(hl->len,rl->len));
     return rs == 0?hl->len<rl->len:(rs<0);
 }
-static ZNode *znode_new(const char *name, size_t len, double score) {
+static ZNode *znode_new(const char *name, const char* key,size_t len, double score) {
     ZNode *node = (ZNode *)malloc(sizeof(ZNode) + len + 1); // +1 for null terminator
     Avl_init(&node->root); // optional back-link if needed
     node->score = score;
     node->len = len;
     memcpy(node->name, name, len);
     node->name[len] = '\0';
-
-    node->hmap.hash = hashFun(std::string(name), len);
-    node->hmap.next = NULL;
-
     return node;
 }
 
@@ -103,7 +100,14 @@ static bool zless(AVLNode* node,const char* name,size_t len,double score){
     int rv = strncmp(val->name,name,min(len,val->len));
     return rv==0?val->len<len:rv<0;
 }
-
+static bool zmore(AVLNode* node,const char* name,size_t len,double score){
+    ZNode* val = container_of(node,ZNode,root);
+    if(val->score!=score){
+        return (score<val->score);
+    }
+    int rv = strncmp(val->name,name,min(len,val->len));
+    return rv == 0?val->len>len:rv<0;
+}
 static bool sorted_entry_eq(HNode* lhs,HNode* rhs){
     ZNode * le = container_of(lhs,ZNode,hmap);
     ZNode *re =container_of(rhs,ZNode,hmap);

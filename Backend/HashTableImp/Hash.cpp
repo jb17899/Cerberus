@@ -7,9 +7,6 @@ u_int64_t hashFun(std::string keyToBeCoded,int maxSize){
     }
     return h;
 }
-
-
-
 void h_init(HTable * htab,size_t n){
 assert(n>0&&(((n-1)&n) == 0));
 htab->val = (HNode**)calloc(n,sizeof(HNode*));
