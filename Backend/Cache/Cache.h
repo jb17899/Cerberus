@@ -1,10 +1,12 @@
 #include<iostream>
 #include "../HashTableImp/Hash.h"
+#define MAX_SIZE 1000
 
 // class HeapItem{
 //     public:
 //     u_int64_t val;
 // };
+
 class HeapItem {
     public:
     u_int64_t val;
@@ -16,11 +18,21 @@ class Entry{
     std::string key;
     size_t heap_idx=-1;
 };
-
-static int get_child_left(u_int64_t i) ;
-static int get_child_right(u_int64_t i);
-static int get_parent(u_int64_t i);
-static void heap_up(HeapItem* heap,u_int64_t i);
-static void heap_delete(std::vector<HeapItem> &a, size_t pos);
-void heap_update(HeapItem* heap, u_int64_t i, u_int64_t len);
-static void heap_down(HeapItem* heap,u_int64_t i,u_int64_t len);
+class Cache{
+    private:
+    std::vector<HeapItem> cache;
+    size_t size_cache;
+    public:
+    Cache(){
+    size_cache = 0;    
+    cache.resize(MAX_SIZE);
+    }
+    int get_child_left(u_int64_t i);
+    int get_child_right(u_int64_t i);
+    int get_parent(u_int64_t i);
+    void heap_up(u_int64_t i);
+    void heap_down(u_int64_t i,u_int64_t len);
+    void heap_update(u_int64_t i, u_int64_t len);
+    void heap_delete(size_t pos);
+    void add_item_to_cache(u_int64_t value);
+};

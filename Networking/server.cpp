@@ -214,6 +214,7 @@ if (fp == NULL) {
         get(&db,value,ans);
         fprintf(fp,"get command at time:%d-%d-%d %d:%d:%d\n",t.year,t.month,t.day,t.hour,t.minute,t.sec);
         write_to_socket(s2,ans.c_str());
+        cout<<ans<<endl;
         
     }
     else if(strncmp(command,"del",3) == 0){

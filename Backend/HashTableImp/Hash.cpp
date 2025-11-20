@@ -1,5 +1,20 @@
 #include "Hash.h"
 using namespace std;
+
+
+
+// uint64_t fnv1a(const std::string& s) {
+//     const uint64_t offset = 0xcbf29ce484222325ULL;
+//     const uint64_t prime  = 0x100000001b3ULL;
+
+//     uint64_t hash = offset;
+//     for (unsigned char c : s) {
+//         hash ^= c;
+//         hash *= prime;
+//     }
+//     return hash;
+// }
+
 u_int64_t hashFun(std::string keyToBeCoded,int maxSize){
     u_int64_t h = 0x811C9DC5;
     for(int c=0;c<maxSize;c++){

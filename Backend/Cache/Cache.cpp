@@ -3,90 +3,93 @@ using namespace std;
 
 //basis on which the heap is built
 // static void heap_up(HeapItem* heap, u_int64_t i) {
-//     HeapItem tmp = heap[i];
-//     while(i>0&&heap[get_parent(i)].val < tmp.val){
-//         heap[i] = heap[get_parent(i)];
+//     HeapItem tmp = cache[i];
+//     while(i>0&&cache[get_parent(i)].val < tmp.val){
+//         cache[i] = cache[get_parent(i)];
 //         i = get_parent(i);
 //     }
-//     heap[i] = tmp;
+//     cache[i] = tmp;
 // }
 // static void heap_down(HeapItem* heap,u_int64_t i,u_int64_t len){
-//     HeapItem tmp =  heap[i];
+//     HeapItem tmp =  cache[i];
 //     while(true){
 //         int left = get_child_left(i);
 //         int right = get_child_right(i);
 //         int min_val = tmp.val;
 //         int min_index = i;
-//         if(left<len && heap[left].val<min_val){
+//         if(left<len && cache[left].val<min_val){
 //             min_index = left;
-//             min_val = heap[left].val;
+//             min_val = cache[left].val;
 //         }
-//         if(right<len && heap[right].val<min_val){
+//         if(right<len && cache[right].val<min_val){
 //             min_index = right;
-//             min_val = heap[right].val;
+//             min_val = cache[right].val;
 //         }
 //         if(min_index == i) break;
-//         heap[i] = heap[min_index];
+//         cache[i] = cache[min_index];
 //         i = min_index;
 //     }
-//     heap[i] = tmp;
+//     cache[i] = tmp;
 // }
 
-static int get_child_left(u_int64_t i) {
+int Cache::get_child_left(u_int64_t i) {
     return (i << 1) + 1;
 };
-static int get_child_right(u_int64_t i) {
+int Cache::get_child_right(u_int64_t i) {
     return (i << 1) + 2;
 };
-static int get_parent(u_int64_t i) {
+int Cache::get_parent(u_int64_t i) {
     return ((i +1)>>2)-1;
 };
-static void heap_up(HeapItem* heap,u_int64_t i){
-    HeapItem val = heap[i];
-    while(i>0&&heap[get_parent(i)].val>val.val){
-        heap[i] = heap[get_parent(i)];
-        *heap[i].entry = get_parent(i);
+void Cache::heap_up(u_int64_t i){
+    HeapItem val = cache[i];
+    while(i>0&&cache[get_parent(i)].val>val.val){
+        cache[i] = cache[get_parent(i)];
+        *cache[i].entry = get_parent(i);
         i = get_parent(i);
     }
     *val.entry = i;
-    heap[i] = val;
+    cache[i] = val;
 }
-static void heap_down(HeapItem* heap,u_int64_t i,u_int64_t len){
-    HeapItem temp = heap[i];
+void Cache::heap_down(u_int64_t i,u_int64_t len){
+    HeapItem temp = cache[i];
     while(true){
         int l = get_child_left(i);
         int r = get_child_right(i);
-        int min_val = heap[i].val;
+        int min_val = cache[i].val;
         int min_pos = i;
-        if(l<len&&heap[l].val<min_val){
-            min_val = heap[l].val;
+        if(l<len&&cache[l].val<min_val){
+            min_val = cache[l].val;
             min_pos = l;
         }
-        if(r<len&&heap[r].val<min_val){
-            min_val = heap[r].val;
+        if(r<len&&cache[r].val<min_val){
+            min_val = cache[r].val;
             min_pos = r;
         }
         if(min_pos == i){
             break;
         }
-        heap[i] = heap[min_pos];
-        *heap[i].entry = min_pos;
+        cache[i] = cache[min_pos];
+        *cache[i].entry = min_pos;
         i = min_pos;
     }
-    heap[i] = temp;
+    cache[i] = temp;
     *temp.entry = i;
 }
-void heap_update(HeapItem* heap, u_int64_t i, u_int64_t len) {
-    if(i>0 &&heap[get_parent(i)].val > heap[i].val) {
-        heap_up(heap, i);
+void Cache::heap_update(u_int64_t i, u_int64_t len) {
+    if(i>0 &&cache[get_parent(i)].val > cache[i].val) {
+        heap_up(i);
     } else {
-        heap_down(heap, i, len);
+        heap_down(i, len);
     }
 }
-static void heap_delete(std::vector<HeapItem> &a, size_t pos) {
-    a[pos] = a.back();
-    a.pop_back();
-    if (pos < a.size()) {
-        heap_update(a.data(), pos, a.size());
+void Cache::heap_delete(size_t pos) {
+    cache[pos] = cache.back();
+    cache.pop_back();
+    if (pos < cache.size()) {
+        heap_update(pos, cache.size());
     }
+}
+void Cache::add_item_to_cache(u_int64_t value){
+    
 }
